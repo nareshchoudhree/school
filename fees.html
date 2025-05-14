@@ -320,32 +320,64 @@
       }
 
       const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({
-        orientation: 'landscape',
-        unit: 'mm',
-        format: 'a4'
+      const receipts = document.querySelectorAll('.receipt');
+      if (receipts.length !== 2) {
+        alert('Error: Expected two receipts.');
+        return;
+      }
+
+      const margin = 10; // Margin in mm
+      const spacing = 10; // Spacing between receipts in mm
+      let maxWidth = 0;
+      let totalHeight = 0;
+      const receiptDimensions = [];
+
+      // Calculate dimensions for each receipt
+      let promiseChain = Promise.resolve();
+
+      receipts.forEach(receipt => {
+        promiseChain = promiseChain.then(() => {
+          return html2canvas(receipt, {
+            scale: 2,
+            useCORS: true,
+            logging: false,
+            backgroundColor: '#ffffff'
+          }).then(canvas => {
+            const imgWidth = canvas.width / 2; // Adjust for scale
+            const imgHeight = canvas.height / 2;
+            const mmWidth = (imgWidth * 25.4) / 96; // Convert pixels to mm (96 DPI)
+            const mmHeight = (imgHeight * 25.4) / 96;
+            receiptDimensions.push({ canvas, mmWidth, mmHeight });
+            maxWidth = Math.max(maxWidth, mmWidth);
+            totalHeight += mmHeight;
+          });
+        });
       });
 
-      const receiptContainer = document.getElementById('receiptContainer');
+      promiseChain.then(() => {
+        // Calculate PDF page size
+        const pdfWidth = maxWidth + 2 * margin;
+        const pdfHeight = totalHeight + 2 * margin + spacing;
 
-      html2canvas(receiptContainer, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff'
-      }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const imgWidth = canvas.width / 2; // Adjust for scaling
-        const imgHeight = canvas.height / 2;
-        const pdfWidth = doc.internal.pageSize.getWidth();
-        const pdfHeight = doc.internal.pageSize.getHeight();
-        const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-        const width = imgWidth * ratio * 0.8; // Slight scaling for margins
-        const height = imgHeight * ratio * 0.8;
-        const x = (pdfWidth - width) / 2;
-        const y = (pdfHeight - height) / 2;
+        const doc = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: [pdfWidth, pdfHeight] // Dynamic page size based on receipts
+        });
 
-        doc.addImage(imgData, 'PNG', x, y, width, height);
+        // Add receipts to PDF
+        let currentY = margin;
+        receiptDimensions.forEach(({ canvas, mmWidth, mmHeight }, index) => {
+          const imgData = canvas.toDataURL('image/png');
+          const ratio = maxWidth / mmWidth; // Scale to match max width
+          const width = mmWidth * ratio;
+          const height = mmHeight * ratio;
+          const x = margin + (maxWidth - width) / 2; // Center horizontally
+
+          doc.addImage(imgData, 'PNG', x, currentY, width, height);
+          currentY += height + (index === 0 ? spacing : 0);
+        });
+
         doc.save(`Fee_Receipt_${new Date().toISOString().split('T')[0]}.pdf`);
       }).catch(error => {
         console.error('Error generating PDF:', error);
