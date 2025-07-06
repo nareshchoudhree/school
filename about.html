@@ -185,24 +185,7 @@
                 padding-left: 1rem;
             }
         }
-        .video-container {
-            position: relative;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-        }
-         .video-container video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -1;
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-        }
+       
 
     </style>
 </head>
@@ -297,13 +280,20 @@
         </div>
     </section>
          <section>
-            <div class="video-container">
-             <video autoplay muted loop controls>
-                    <source src="rk_education_dmn-20250627-0001.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                     </video>
-                     
-                    </div>
+            div class="fixed inset-0 z-0 overflow-hidden">
+    <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+        <source src="rk_education_dmn-20250627-0001.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<!-- Content Box -->
+<div class="absolute top-5 left-5 bg-black/50 text-white p-4 rounded-lg max-w-[90%] z-10">
+    <h3 class="text-xl font-bold text-blue-300 mb-2">Rk Education Video</h3>
+    <a href="rk_education_dmn-20250627-0001.mp4" target="_blank" class="text-blue-400 hover:text-blue-600 font-medium flex items-center">
+        Watch Now <i class="fab fa-instagram ml-2 text-red-600"></i>
+    </a>
+</div>
          </section>
     <!-- Mission and Vision Section -->
     <section id="mission" class="py-16 bg-gray-50">
