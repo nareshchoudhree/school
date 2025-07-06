@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RK EDUCATION DHORIMNNA</title>
+    <link rel="icon" href="rk-logo.jpg" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #f59e0b;
+            --accent: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.9) 0%, rgba(16, 185, 129, 0.7) 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .notification-item, .post-item {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .active-nav::after {
+            width: 100%;
+        }
+
+        /* Custom CSS for enhancements */
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .teacher-card:hover .teacher-img {
+            transform: scale(1.05);
+        }
+
+        .timetable-cell {
+            transition: all 0.3s ease;
+        }
+
+        .timetable-cell:hover {
+            background-color: #e0f2fe;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .grade-selector {
+            scrollbar-width: thin;
+            scrollbar-color: #3b82f6 #e5e7eb;
+        }
+
+        .grade-selector::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .grade-selector::-webkit-scrollbar-track {
+            background: #e5e7eb;
+            border-radius: 10px;
+        }
+
+        .grade-selector::-webkit-scrollbar-thumb {
+            background-color: #3b82f6;
+            border-radius: 10px;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Desktop Subnavigation */
+        .group:hover .group-hover\:block {
+            display: block;
+        }
+
+        /* Ensure subnavigation is hidden by default */
+        .relative .hidden {
+            display: none;
+        }
+
+        /* Subnavigation styling */
+        .relative .bg-white {
+            min-width: 12rem;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Subnavigation items */
+        .relative .bg-white a {
+            display: block;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #374151;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .relative .bg-white a:hover {
+            background-color: #f3f4f6;
+            color: #1e40af;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu.hidden {
+            display: none;
+        }
+
+        #mobile-menu {
+            display: none;
+        }
+
+        #mobile-menu:not(.hidden) {
+            display: block;
+        }
+
+        /* Mobile Subnavigation */
+        @media (max-width: 767px) {
+            .pl-4 {
+                padding-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <div class="flex items-center">
+                        <i class="fas fa-graduation-cap text-3xl text-blue-900 mr-2"></i>
+                        <span class="text-xl font-bold text-blue-900">RK Education Dhorimnna</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="index.html" class="nav-link text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="about.html" class="nav-link active-nav text-blue-900 px-3 py-2 text-sm font-medium">About</a>
+                        <a href="academic.html" class="nav-link text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium">Academics</a>
+                        <a href="infrastructure.html" class="nav-link text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium">Infrastructure</a>
+                        <a href="admission.html" class="nav-link text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium">Admission</a>
+                        <a href="contact.html" class="nav-link text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium">Contact</a>
+                        <a href="result.html" class="nav-link text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium">Result 2025</a>
+                        <a href="index.html#director" class="nav-link text-gray-700 hover:text-blue-900 px-3 py-2 text-sm font-medium">Director</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-900 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900">Home</a>
+                <a href="about.html" class="block px-3 py-2 text-base font-medium text-blue-900">About</a>
+                <a href="academic.html" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900">Academics</a>
+                <a href="infrastructure.html" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900">Infrastructure</a>
+                <a href="admission.html" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900">Admission</a>
+                <a href="contact.html" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900">Contact</a>
+                <a href="result.html" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900">Result 2025</a>
+                <a href="index.html#director" class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-blue-900">Director</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20 md:py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">About RK Education Dhorimnna</h1>
+                    <p class="text-lg mb-8 opacity-90">Discover our journey, mission, and commitment to shaping future leaders through holistic education.</p>
+                    <div class="flex space-x-4">
+                        <a href="#mission" class="bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-semibold px-6 py-3 rounded-lg transition duration-300">Our Mission</a>
+                        <a href="#history" class="border-2 border-white hover:bg-white hover:text-blue-900 font-semibold px-6 py-3 rounded-lg transition duration-300">Our History</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -top-10 -left-10 w-32 h-32 bg-yellow-400 rounded-full opacity-20 animate-pulse"></div>
+                        <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-green-400 rounded-full opacity-20 animate-pulse delay-300"></div>
+                        <img src="डॉ. एस. राधाकृष्णन् उच्च माध्यमिक विद्यालय धोरीमन्ना.png" alt="School building" class="rounded-xl shadow-2xl floating relative z-10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Our Story</h2>
+                <div class="w-20 h-1 bg-yellow-500 mx-auto"></div>
+            </div>
+            <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+                <div class="lg:col-span-5 mb-10 lg:mb-0">
+                    <div class="relative">
+                        <div class="absolute -top-6 -left-6 w-full h-full bg-yellow-100 rounded-xl"></div>
+                        <img src="डॉ. एस. राधाकृष्णन् उच्च माध्यमिक विद्यालय धोरीमन्ना.png" alt="School building" class="relative rounded-xl shadow-lg">
+                    </div>
+                </div>
+                <div class="lg:col-span-7">
+                    <h3 class="text-2xl font-semibold text-blue-900 mb-4">About RK Education Dhorimnna</h3>
+                    <p class="text-gray-600 mb-6">Established in 2008, RK Education Dhorimnna is a premier private secondary school dedicated to fostering academic excellence, character development, and holistic education. Located in the heart of Dhorimnna, our institution has been a beacon of learning, nurturing students to become confident, compassionate, and capable leaders of tomorrow.</p>
+                    <p class="text-gray-600 mb-6">Our commitment to a well-rounded education is reflected in our rigorous academic programs, state-of-the-art facilities, and a dedicated faculty with an average of 15 years of teaching experience. We strive to create an environment where intellectual curiosity, critical thinking, and personal growth thrive.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+         <section>
+            <div class="video-container">
+             <video autoplay muted loop controls>
+                    <source src="rk_education_dmn-20250627-0001.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                     </video>
+                     
+                    </div>
+         </section>
+    <!-- Mission and Vision Section -->
+    <section id="mission" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Our Mission & Vision</h2>
+                <div class="w-20 h-1 bg-yellow-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 bg-blue-100 p-3 rounded-lg">
+                            <i class="fas fa-bullseye text-blue-900 text-xl"></i>
+                        </div>
+                        <h3 class="ml-4 text-xl font-semibold text-gray-900">Our Mission</h3>
+                    </div>
+                    <p class="text-gray-600">To provide a transformative educational experience that empowers students with knowledge, skills, and values to excel in a dynamic world.</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-md p-6 card-hover">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 bg-green-100 p-3 rounded-lg">
+                            <i class="fas fa-eye text-green-700 text-xl"></i>
+                        </div>
+                        <h3 class="ml-4 text-xl font-semibold text-gray-900">Our Vision</h3>
+                    </div>
+                    <p class="text-gray-600">To be a leading institution that nurtures innovative thinkers, compassionate leaders, and responsible global citizens.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Section -->
+    <section id="history" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Our History</h2>
+                <div class="w-20 h-1 bg-yellow-500 mx-auto"></div>
+            </div>
+            <div class="space-y-8">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-blue-100 p-3 rounded-lg">
+                        <i class="fas fa-calendar-alt text-blue-900 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="text-lg font-medium text-gray-900">2008 - Founding Year</h4>
+                        <p class="text-gray-600">RK Education Dhorimnna was established with a vision to provide quality education and foster holistic development in the region.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-green-100 p-3 rounded-lg">
+                        <i class="fas fa-building text-green-700 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="text-lg font-medium text-gray-900">2015 - Infrastructure Expansion</h4>
+                        <p class="text-gray-600">The school expanded its facilities, introducing advanced science labs, a modern library, and a performing arts center.</p>
+                    </div>
+                </div>
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 bg-yellow-100 p-3 rounded-lg">
+                        <i class="fas fa-trophy text-yellow-700 text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <h4 class="text-lg font-medium text-gray-900">2020 - Academic Excellence</h4>
+                        <p class="text-gray-600">Achieved 100% university acceptance rate for graduating students, reflecting our commitment to academic rigor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Faculty Highlight Section -->
+    <section id="faculty-highlight" class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-blue-900 mb-4">Our Dedicated Faculty</h2>
+                <div class="w-20 h-1 bg-yellow-500 mx-auto"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="teacher-card bg-white p-6 rounded-lg border border-gray-200 shadow-sm transition text-center">
+                    <img src="bhomaram sharan.jpg" alt="Teacher" class="teacher-img w-32 h-32 rounded-full mx-auto mb-4 transition">
+                    <h5 class="font-bold text-gray-800">Bhomaram Saharan Kekar</h5>
+                    <p class="text-sm text-gray-600">Director</p>
+                    <p class="text-sm text-gray-600">English, 15 years of experience</p>
+                </div>
+                <div class="teacher-card bg-white p-6 rounded-lg border border-gray-200 shadow-sm transition text-center">
+                    <img src="hanumanram.jpg" alt="Teacher" class="teacher-img w-32 h-32 rounded-full mx-auto mb-4 transition">
+                    <h5 class="font-bold text-gray-800">Hanuman Ram Vishnoi</h5>
+                    <p class="text-sm text-gray-600">Principal</p>
+                    <p class="text-sm text-gray-600">10 years of experience</p>
+                </div>
+                <div class="teacher-card bg-white p-6 rounded-lg border border-gray-200 shadow-sm transition text-center">
+                    <img src="https://logodix.com/logo/1086564.png" alt="Teacher" class="teacher-img w-32 h-32 rounded-full mx-auto mb-4 transition">
+                    <h5 class="font-bold text-gray-800">Khemraj Siyol</h5>
+                    <p class="text-sm text-gray-600">Hindi Teacher</p>
+                    <p class="text-sm text-gray-600">M.A. in Hindi, 10 years of experience</p>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <a href="academic.html#faculty" class="bg-blue-900 hover:bg-blue-800 text-white font-semibold px-6 py-3 rounded-lg transition duration-300">Meet Our Full Faculty</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-graduation-cap text-3xl text-yellow-500 mr-2"></i>
+                        <span class="text-xl font-bold">RK Education Dhorimnna</span>
+                    </div>
+                    <p class="text-gray-300">Shaping future leaders through academic excellence and holistic education since 2010.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-yellow-500">Home</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-yellow-500">About</a></li>
+                        <li><a href="academic.html" class="text-gray-300 hover:text-yellow-500">Academics</a></li>
+                        <li><a href="admission.html" class="text-gray-300 hover:text-yellow-500">Admissions</a></li>
+                        <li><a href="infrastructure.html" class="text-gray-300 hover:text-yellow-500">Infrastructure</a></li>
+                        <li><a href="result.html" class="text-gray-300 hover:text-yellow-500">Result</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-yellow-500">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Contact Info</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300">Dr. S. Radhakrishnan Sr. Sec. School, Dhorimnna</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300">+91 9928757670</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+                            <span class="text-gray-300">saharanbhomaramkekar1982@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Follow Us</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/saharanbhomaramkekar" class="text-blue-200 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-blue-200 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/rk_education_dmn/" class="text-blue-200 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-blue-200 hover:text-white">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@rkeducationdhorimanna" class="text-blue-200 hover:text-white">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-blue-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-blue-200 mb-4 md:mb-0">© 2025 RK Education. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-blue-200 hover:text-white">Privacy Policy</a>
+                    <a href="#" class="text-blue-200 hover:text-white">Terms of Service</a>
+                </div>
+                <div><br></div>
+                <div>
+                    <a href="https://nareshchoudhree.github.io/my-portfolio/"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="made-by-button inline-block px-4 py-2 text-blue-200 font-semibold rounded-lg bg-blue-800/50 border border-blue-600 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:bg-blue-700/70 group">
+                        <span class="relative z-10">developed by Naresh Choudhary</span>
+                        <span class="absolute inset-0 bg-gradient-to-r from-yellow-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                        <span class="absolute inset-0 rounded-lg border border-yellow-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-blue-900 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Back to top button
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.classList.remove('opacity-0', 'invisible');
+                    backToTop.classList.add('opacity-100', 'visible');
+                } else {
+                    backToTop.classList.add('opacity-0', 'invisible');
+                    backToTop.classList.remove('opacity-100', 'visible');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Active nav link highlighting
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.scrollY >= sectionTop - 60) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active-nav');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active-nav');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
